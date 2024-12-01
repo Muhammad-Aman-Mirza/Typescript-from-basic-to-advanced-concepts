@@ -1,0 +1,27 @@
+# Node modules
+/node_modules/
+
+# Output directories for compiled files
+/dist/
+/build/
+
+# TypeScript cache and other temporary files
+/.tsbuildinfo
+
+# IDE specific files
+/.idea/
+/.vscode/
+
+# Log files
+*.log
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Optional: environment files
+.env
+.env.local
+.env.*.local
+# Ignore package-lock.json
+/package-lock.json

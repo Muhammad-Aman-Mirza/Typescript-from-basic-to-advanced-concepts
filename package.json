@@ -1,0 +1,17 @@
+{
+  "name": "typescript-from-basic-to-advanced-concepts",
+  "version": "1.0.0",
+  "description": "This guide will walk you through setting up a TypeScript project using npm, configuring TypeScript with a `tsconfig.json` file, and compiling the code.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  }
+}
