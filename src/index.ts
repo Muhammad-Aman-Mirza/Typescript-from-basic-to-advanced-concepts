@@ -1,3 +1,7 @@
-// src/index.ts
-const message: string = "Hello, TypeScript!";
-console.log(message); // This will print the message to the console when run
+function getValue<T>(value: T): T {
+  return value;
+}
+
+function processResponse(response: unknown): void {
+  const successResponse = response as SuccessResponse;
+}

@@ -1,15 +1,23 @@
-type Shape = 
-  | { kind: 'circle'; radius: number }
-  | { kind: 'square'; sideLength: number }
-  | { kind: 'rectangle'; width: number; height: number };
+/**
+ * When a function is supposed to throw an error or enter an infinite loop,
+ * the return type is never because it will not return a value. This
+ * is useful for handling exceptional cases or for indicating that a
+ * function will terminate the program or control flow
+ * (such as throwing an exception or entering an infinite loop).
+ */
+
+type Shape =
+  | { kind: "circle"; radius: number }
+  | { kind: "square"; sideLength: number }
+  | { kind: "rectangle"; width: number; height: number };
 
 function getArea(shape: Shape): number {
   switch (shape.kind) {
-    case 'circle':
+    case "circle":
       return Math.PI * shape.radius ** 2;
-    case 'square':
+    case "square":
       return shape.sideLength ** 2;
-    case 'rectangle':
+    case "rectangle":
       return shape.width * shape.height;
     default:
       // The `never` type ensures that this code should never be reached
@@ -24,14 +32,14 @@ function assertNever(value: never): never {
 }
 
 // Usage examples
-const circle: Shape = { kind: 'circle', radius: 5 };
-const square: Shape = { kind: 'square', sideLength: 4 };
-const rectangle: Shape = { kind: 'rectangle', width: 5, height: 10 };
+const circle: Shape = { kind: "circle", radius: 5 };
+const square: Shape = { kind: "square", sideLength: 4 };
+const rectangle: Shape = { kind: "rectangle", width: 5, height: 10 };
 
-console.log(getArea(circle));     // 78.54 (Area of circle)
-console.log(getArea(square));     // 16 (Area of square)
-console.log(getArea(rectangle));  // 50 (Area of rectangle)
+console.log(getArea(circle)); // 78.54 (Area of circle)
+console.log(getArea(square)); // 16 (Area of square)
+console.log(getArea(rectangle)); // 50 (Area of rectangle)
 
-const triangle: Shape = { kind: 'triangle', base: 5, height: 10 };
+const triangle: Shape = { kind: "triangle", base: 5, height: 10 };
 // This will cause a compile-time error because the `triangle` case is not handled
-console.log(getArea(triangle));  // Error: Unhandled case
+console.log(getArea(triangle)); // Error: Unhandled case
