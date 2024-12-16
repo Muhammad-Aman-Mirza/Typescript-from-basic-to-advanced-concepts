@@ -1,35 +1,33 @@
 /**
- ** Parameters 
- ** In TypeScript, the Parameters utility type is used to extract the types of the parameters of a 
- ** function type and construct a tuple type from those types.
+ ** Parameters
+ ** Parameters constructs a tuple type from the types used in the parameters of a function type Type.
  */
 
- type MyFunction = (a: string, b: number, c: boolean) => void;
+type MyFunction = (a: string, b: number, c: boolean) => void;
 
- type MyFunctionParameters = Parameters<MyFunction>;
- 
- // You can create an example value that matches the parameter types
- const exampleParams: MyFunctionParameters = ['Hello', 42, true];
- 
- // Log the actual values (not the types)
- console.log(exampleParams);
- 
- function greet(name:string,age:number):string{
-  return `hi, My name is ${name} amd I am ${age} year old.`
- }
+type MyFunctionParameters = Parameters<MyFunction>;
 
- type GreetParameters = Parameters<typeof greet>
- 
- console.log(greet('aman',12));
- 
+// You can create an example value that matches the parameter types
+const exampleParams: MyFunctionParameters = ["Hello", 42, true];
+
+// Log the actual values (not the types)
+console.log(exampleParams);
+
+function greet(name: string, age: number): string {
+  return `hi, My name is ${name} amd I am ${age} year old.`;
+}
+
+type GreetParameters = Parameters<typeof greet>;
+
+console.log(greet("aman", 12));
+
 //  function applyFunc<T extends (...args: any[])=> any>(fn: T, ...args: Parameters<T>):ReturnType<T>{
 //   return fn(...args)
 //  }
 //  const results = applyFunc(greet,'aman',1);
 //  console.log({results});
 
-
- /**
+/**
   ** Let's break it down step-by-step:
   ** 1. Generic Function (T extends (...args: any[]) => any)
   ** <T extends (...args: any[]) => any>
@@ -60,10 +58,9 @@
   ** the return value matches the expected return type, everything is type-safe.
   */
 
-
 //  function app<T extends (...args:any[])=> any>(fn: T, ...args: Parameters<T>):ReturnType<T>{
 //   console.log("===",fn(...args),{...args},{fn});
-  
+
 //   return fn(...args)
 //  }
 
@@ -71,11 +68,10 @@
 //  const results = app(add,5,4)
 //  console.log({results});
 
-
- /**
-  ** mapArgs - Applies a function to each argument before passing to another function:
-  ** This function maps over the arguments of the function and transforms them before calling the original function.
-  */
+/**
+ ** mapArgs - Applies a function to each argument before passing to another function:
+ ** This function maps over the arguments of the function and transforms them before calling the original function.
+ */
 
 //   function mapArgs<T extends (...args: any[]) => any, U>(
 //     fn: T,
@@ -85,7 +81,6 @@
 //     const transformedArgs = args.map(transform);
 //     return fn(...transformedArgs);
 //   }
-  
 
 // const multiply = (a: number,b:number) => a*b
 // const results = mapArgs(multiply,x=>x*2,0,1)
@@ -108,13 +103,13 @@
 // const subtract = (a: number, b: number) => a - b;
 // const loggedSubtract = createLogger(subtract);
 
-// const results = loggedSubtract(10, 3); 
+// const results = loggedSubtract(10, 3);
 // Logs:
 // Arguments: [10, 3]
 // Return: 7
 
 /**
- ** 4. retryFunc - A function that retries another function a certain number of times if it fails: 
+ ** 4. retryFunc - A function that retries another function a certain number of times if it fails:
  */
 
 //  function retryFunc<T extends (...args: any[])=> any>(fn: T,retries: number,...args: Parameters<T>):ReturnType<T>{
@@ -139,7 +134,7 @@
 // console.log("retryFunc=",{results});
 
 /**
- ** memoizeFunc - Caches the result of a function based on its arguments to avoid redundant calls: 
+ ** memoizeFunc - Caches the result of a function based on its arguments to avoid redundant calls:
  */
 
 // function memoizeFunc<T extends (...args: any[]) => any>(fn: T):(...args: Parameters<T>)=> ReturnType<T>{
@@ -168,18 +163,21 @@
 // const result2 = memoizedCalculation(2, 3);  // Logs "Returning cached result" and then 6
 
 /**
- ** debounceFunc - A function that delays the invocation of another function until after a certain amount of time has passed: 
+ ** debounceFunc - A function that delays the invocation of another function until after a certain amount of time has passed:
  */
-function debounceFunc<T extends (...args: any[]) => any>(fn:T,delay: number):(...args: Parameters<T> )=>void{
-  let timeoutId: NodeJS.Timeout
+function debounceFunc<T extends (...args: any[]) => any>(
+  fn: T,
+  delay: number
+): (...args: Parameters<T>) => void {
+  let timeoutId: NodeJS.Timeout;
 
-  return (...args:Parameters<T>)=>{
-    if(timeoutId) clearTimeout(timeoutId)
-      timeoutId = setTimeout(()=>fn(...args),delay)
-  }
+  return (...args: Parameters<T>) => {
+    if (timeoutId) clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => fn(...args), delay);
+  };
 }
 const logMessage = (message: string) => console.log(message);
 
 const debouncedLog = debounceFunc(logMessage, 2000);
 
-debouncedLog("Hello!");  // This will only log after 2 seconds of inactivity
+debouncedLog("Hello!"); // This will only log after 2 seconds of inactivity
