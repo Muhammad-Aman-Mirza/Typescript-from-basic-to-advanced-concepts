@@ -21,6 +21,96 @@ type GreetParameters = Parameters<typeof greet>;
 
 console.log(greet("aman", 12));
 
+// type myFunc = (a: string, b: number, c: boolean) => void;
+// type test = Parameters<myFunc>;
+// let result: test = ["abc", 1, true];
+// console.log({ result });
+
+// type T0 = Parameters<() => string>;
+// function app(...a: T0) {
+//   return a;
+// }
+// console.log(app());
+// type T0 = Parameters<(str: string) => string>;
+// function app(...a: T0) {
+//   return a[0];
+// }
+// console.log(app("af"));
+
+// Defining the type T2
+// type T2 = Parameters<<T>(arg: T) => T>; // Equivalent to [unknown]
+
+// // Function that accepts parameters of type T2 (which is [unknown])
+// function printParameter(params: T2) {
+//   // The params are expected to be a tuple of [unknown]
+//   console.log(params[0]);
+//   return params;
+// }
+
+// // Using printParameter with a valid argument
+// printParameter([42]); // Output: 42
+
+// // Using printParameter with a string argument
+// printParameter(["Hello"]); // Output: Hello
+
+// // Using printParameter with a boolean argument
+// printParameter([true]); // Output: true
+
+// declare function f1(arg: { a: number; b: string }): void;
+// type T3 = Parameters<typeof f1>;
+// function app(param: T3) {
+//   console.log({ param });
+
+//   const [{ a, b }] = param; // Destructuring the tuple
+//   console.log(a); // Accessing the 'a' property of the object
+//   console.log(b); // Accessing the 'b' property of the object
+// }
+// console.log(app([{ a: 10, b: "Hello" }]));
+
+// type T4 = Parameters<any>;
+
+// function app(...param: T4) {
+//   return param[0];
+// }
+// console.log(app(2, 5));
+
+// type T5 = Parameters<never>; // T5 is []
+
+// // A function that uses T5
+// function exampleFn(...args: T5[]) {
+//   console.log(args); // This would log an empty array [] as T5 is []
+// }
+
+// console.log(exampleFn()); // Works fine, since T5 is []
+
+// type T5 = Parameters<() => never>; // T5 is []
+
+// function exampleFn(...args: T5): void {
+//   console.log(args); // No arguments expected, works fine
+// }
+
+// exampleFn(); // Works without error because `T5` is []
+
+// type T6 = Parameters<(str: string) => string>;
+// function app(...param: T6) {
+//   console.log(param[0]); // Accessing the first argument of the function
+// }
+// console.log(app("fgvwed"));
+
+// T7 represents the parameter type of the function `(fn: Function) => Function`, which is [Function]
+// type T7 = Parameters<(fn: Function) => Function>; // T7 will be [Function]
+
+// function app(...fn: T7): Function {
+//   // Using T7 as the parameter type (an array with one Function)
+//   // Calling the first function in the array and returning its result
+//   return fn[0]; // Calling the first function in the array (fn[0])
+// }
+
+// // const exampleFn = () => "Hello, World!";
+// const exampleFn = "njef";
+// // Correct usage: passing an array with a single function
+// console.log(app(exampleFn())); // Output: "Hello, World!"
+
 //  function applyFunc<T extends (...args: any[])=> any>(fn: T, ...args: Parameters<T>):ReturnType<T>{
 //   return fn(...args)
 //  }
