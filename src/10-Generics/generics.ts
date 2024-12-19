@@ -51,7 +51,6 @@
 // const stringIdentity = identity("Hello");  // TypeScript infers 'string' for the argument and return type
 // console.log({numberIdentity,stringIdentity});
 
-
 /**
  ** Generic Classes
  ** A generic class has a similar shape to a generic interface. Generic classes have a generic type parameter
@@ -80,7 +79,7 @@
 // function loggingIdentity<Type extends LengthWise>(arg: Type): Type{
 // 	console.log(arg.length,arg.breath);
 // 	return arg
-	
+
 // }
 
 // console.log(loggingIdentity({length:1,breath:2,arg:2}));
@@ -105,7 +104,6 @@
 
 // const personInstance = create(Person);
 // console.log(create(Person));
-
 
 // class BeeKeeper{
 // 	hasMask:boolean = true
@@ -136,27 +134,71 @@
 // console.log(createInstance(Bee).keeper.hasMask);
 
 // Define the Producer interface
-interface Producer<T> {
-  make(): T;
+// interface Producer<T> {
+//   make(): T;
+// }
+
+// // Example of a class implementing Producer interface
+// class StringProducer implements Producer<string> {
+//   make(): string {
+//     return "Hello, World!";
+//   }
+// }
+
+// // A function that takes a Producer and calls its `make` method
+// function useProducer<T>(producer: Producer<T>): T {
+//   return producer.make();
+// }
+
+// // Create an instance of StringProducer
+// const stringProducer = new StringProducer();
+
+// // Call the function with the producer instance
+// const result = useProducer(stringProducer);
+
+// console.log(result); // Outputs: Hello, World!
+
+// interface Producer<T> {
+//   make(): T;
+// }
+// function app<T>(prod: Producer<T>): T {
+//   return prod.make();
+// }
+
+// let producer: Producer<string> = {
+//   make: () => "hi",
+// };
+
+// let test = app(producer);
+// console.log({ test });
+
+interface Consumer<T> {
+  consume: (arg: T) => T; // consume must return the same type it receives
 }
 
-// Example of a class implementing Producer interface
-class StringProducer implements Producer<string> {
-  make(): string {
-    return "Hello, World!";
-  }
+// Function that uses the Consumer interface as a parameter
+function processItem<T>(consumer: Consumer<T>, item: T): T {
+  return consumer.consume(item);
 }
 
-// A function that takes a Producer and calls its `make` method
-function useProducer<T>(producer: Producer<T>): T {
-  return producer.make();
-}
+// Example consumer
+const stringConsumer: Consumer<string> = {
+  consume: (arg: string) => {
+    console.log("Consuming string:", arg);
+    return arg; // Must return the same type (string)
+  },
+};
 
-// Create an instance of StringProducer
-const stringProducer = new StringProducer();
+const numberConsumer: Consumer<number> = {
+  consume: (arg: number) => {
+    console.log("Consuming number:", arg);
+    return arg; // Must return the same type (number)
+  },
+};
 
-// Call the function with the producer instance
-const result = useProducer(stringProducer);
+// Using the function with the consumers
+const stringResult = processItem(stringConsumer, "Hello, World!"); // Consuming string: Hello, World!
+const numberResult = processItem(numberConsumer, 42); // Consuming number: 42
 
-console.log(result); // Outputs: Hello, World!
-
+console.log("Processed string result:", stringResult); // Processed string result: Hello, World!
+console.log("Processed number result:", numberResult); // Processed number result: 42
