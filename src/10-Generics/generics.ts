@@ -202,3 +202,56 @@ const numberResult = processItem(numberConsumer, 42); // Consuming number: 42
 
 console.log("Processed string result:", stringResult); // Processed string result: Hello, World!
 console.log("Processed number result:", numberResult); // Processed number result: 42
+
+
+
+// interface Producer<in out T> {
+//   consume: (arg: T) => void;
+//   make(): T;
+// 	check(): T;
+// }
+
+// function app<T>(consumer: Producer<T>, value: T) {
+//   consumer.consume(value);
+//   return consumer.make();
+// }
+
+// // Usage example:
+// console.log(
+//   app({
+//     consume: (value: number) => console.log(value),
+//     make: () => 11,  // Providing a value for make method
+// 		check:()=> 11
+//   }, 11)
+// );
+
+// Consumer: Consumes a value of type T (contravariant)
+interface Consumer<in T> {
+  consume: (arg: T) => void;
+}
+
+// Producer: Produces a value of type T (covariant), `check` returns type T.
+interface Producer<out T> {
+  make(): T;
+  check(): T;
+}
+
+// FullProducer combines Consumer and Producer, allowing both contravariant and covariant behavior
+interface FullProducer<in T, out R> extends Consumer<T>, Producer<R> {}
+
+function app<T, R>(producer: FullProducer<T, R>, value: T): R {
+  producer.consume(value);  // consumes a T type
+  return producer.check();   // returns an R type
+}
+
+// Usage Example
+const producer: FullProducer<number, string> = {
+  consume: (value: number) => console.log(`Consuming: ${value}`),
+  make: () => "Hello",  // Returns a string
+  check: () => "Checked"  // Returns a string
+};
+
+const result = app(producer, 42);  // Consumes a number, but check() returns a string
+console.log(result);  // Output: "Checked"
+
+
